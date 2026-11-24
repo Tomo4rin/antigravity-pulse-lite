@@ -489,7 +489,7 @@ class PulseCollector:
         self.server = None
         return None
 
-    def snapshot(self, force_quota=False):
+    def snapshot(self, force_quota=False, conversation_id=None):
         now_ms = int(time.time() * 1000)
         srv = self.ensure_server(force=force_quota)
         if not srv:
@@ -498,6 +498,7 @@ class PulseCollector:
                 "serverTimeMs": now_ms,
                 "error": "未检测到运行中的 Antigravity 本地服务",
                 "groups": self.quota_cache,
+                "conversations": [],
                 "speed": None,
             }
         try:
@@ -513,32 +514,45 @@ class PulseCollector:
                 self.quota_cache = parse_quota(q_resp, now_ms)
                 self.quota_at = time.monotonic()
 
-            # 2. 最近活跃对话与生成统计
+            # 2. 对话列表与目标对话生成统计
             all_resp = rpc_post(srv["port"], srv["csrf"], "GetAllCascadeTrajectories", {"excludeSubtrajectories": False}, timeout=5.0)
             summaries = all_resp.get("trajectorySummaries") or {}
-            latest_id = None
-            latest_meta = None
-            latest_ts = -1
+            ordered = []
             for cid, info in summaries.items():
                 if not isinstance(info, dict):
                     continue
                 ts = parse_iso_ms(info.get("lastModifiedTime")) or 0
-                if ts > latest_ts:
-                    latest_ts = ts
-                    latest_id = cid
-                    latest_meta = info
+                ordered.append((ts, cid, info))
+            ordered.sort(key=lambda x: x[0], reverse=True)
+
+            conversations = [
+                {
+                    "id": cid,
+                    "title": (str(info.get("summary") or "未命名对话").strip() or "未命名对话")[:36],
+                    "steps": parse_int(info.get("stepCount")) or 0,
+                }
+                for _, cid, info in ordered[:15]
+            ]
+
+            target_id = None
+            target_meta = None
+            if conversation_id and conversation_id in summaries and isinstance(summaries[conversation_id], dict):
+                target_id = conversation_id
+                target_meta = summaries[conversation_id]
+            elif ordered:
+                _, target_id, target_meta = ordered[0]
 
             speed = None
-            if latest_id:
+            if target_id:
                 gen_resp = rpc_post(
                     srv["port"],
                     srv["csrf"],
                     "GetCascadeTrajectoryGeneratorMetadata",
-                    {"cascadeId": latest_id, "includeMessages": False},
+                    {"cascadeId": target_id, "includeMessages": False},
                     timeout=6.0,
                 )
                 generators = gen_resp.get("generatorMetadata") or (gen_resp.get("trajectory") or {}).get("generatorMetadata") or []
-                step_count = parse_int((latest_meta or {}).get("stepCount"))
+                step_count = parse_int((target_meta or {}).get("stepCount"))
                 steps = []
                 # 仅在步数适中时顺带拉取步数计时用于计算工具用时，避免超大长对话卡顿
                 if step_count is not None and step_count <= 1200:
@@ -547,15 +561,15 @@ class PulseCollector:
                             srv["port"],
                             srv["csrf"],
                             "GetCascadeTrajectorySteps",
-                            {"cascadeId": latest_id, "stepOffset": 0},
+                            {"cascadeId": target_id, "stepOffset": 0},
                             timeout=5.0,
                         )
                         steps = st_resp.get("steps") or (st_resp.get("trajectory") or {}).get("steps") or []
                     except Exception:
                         steps = []
-                speed = parse_trajectory_metrics(generators, steps=steps, step_count=step_count, cascade_id=latest_id)
-                if latest_meta and latest_meta.get("summary"):
-                    speed["title"] = str(latest_meta["summary"])
+                speed = parse_trajectory_metrics(generators, steps=steps, step_count=step_count, cascade_id=target_id)
+                if target_meta and target_meta.get("summary"):
+                    speed["title"] = str(target_meta["summary"])
 
             self.last_error = None
             return {
@@ -563,6 +577,7 @@ class PulseCollector:
                 "serverTimeMs": now_ms,
                 "error": None,
                 "groups": self.quota_cache,
+                "conversations": conversations,
                 "speed": speed,
             }
         except Exception as exc:
@@ -573,6 +588,7 @@ class PulseCollector:
                 "serverTimeMs": now_ms,
                 "error": f"采集异常：{exc}",
                 "groups": self.quota_cache,
+                "conversations": [],
                 "speed": None,
             }
 

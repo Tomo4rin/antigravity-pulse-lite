@@ -9,18 +9,18 @@
     :root {
       --bg-base: #eef2ff;
       --bg-mesh:
-        radial-gradient(120% 80% at 8% 4%, rgba(96, 165, 250, 0.28) 0%, transparent 55%),
-        radial-gradient(100% 75% at 94% 12%, rgba(167, 139, 250, 0.28) 0%, transparent 56%),
-        radial-gradient(95% 75% at 85% 92%, rgba(251, 146, 60, 0.20) 0%, transparent 54%),
-        radial-gradient(95% 75% at 12% 88%, rgba(52, 211, 153, 0.20) 0%, transparent 55%),
-        linear-gradient(160deg, #f5f7ff 0%, #eef2fb 50%, #f3f6fc 100%);
-      --glass: rgba(255, 255, 255, 0.56);
-      --glass-strong: rgba(255, 255, 255, 0.72);
+        radial-gradient(120% 80% at 8% 4%, rgba(96, 165, 250, 0.30) 0%, transparent 55%),
+        radial-gradient(100% 75% at 94% 12%, rgba(167, 139, 250, 0.30) 0%, transparent 56%),
+        radial-gradient(95% 75% at 85% 92%, rgba(251, 146, 60, 0.22) 0%, transparent 54%),
+        radial-gradient(95% 75% at 12% 88%, rgba(52, 211, 153, 0.22) 0%, transparent 55%),
+        linear-gradient(160deg, #f5f7ff 0%, #edf2fc 50%, #f4f6fd 100%);
+      --glass: rgba(255, 255, 255, 0.54);
+      --glass-strong: rgba(255, 255, 255, 0.74);
       --glass-soft: rgba(255, 255, 255, 0.42);
-      --glass-edge: rgba(255, 255, 255, 0.75);
+      --glass-edge: rgba(255, 255, 255, 0.80);
       --glass-rim: rgba(99, 102, 241, 0.14);
-      --glass-top: rgba(255, 255, 255, 0.92);
-      --glass-sheen: linear-gradient(135deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.12) 38%, rgba(255, 255, 255, 0) 64%);
+      --glass-top: rgba(255, 255, 255, 0.94);
+      --glass-sheen: linear-gradient(135deg, rgba(255, 255, 255, 0.62) 0%, rgba(255, 255, 255, 0.14) 36%, rgba(255, 255, 255, 0) 64%);
       --track-bg: rgba(15, 23, 42, 0.08);
       --text: #0f172a;
       --muted: #52627a;
@@ -31,49 +31,55 @@
       --danger: #f43f5e;
       --warning: #f59e0b;
       --rainbow: linear-gradient(90deg, #60a5fa 0%, #a78bfa 38%, #fb923c 72%, #34d399 100%);
-      --shadow: 0 8px 24px rgba(30, 41, 59, 0.08), 0 1px 3px rgba(30, 41, 59, 0.05);
+      --shadow: 0 10px 28px rgba(30, 41, 59, 0.09), 0 1px 3px rgba(30, 41, 59, 0.05);
+      --orb-a: rgba(96, 165, 250, 0.34);
+      --orb-b: rgba(167, 139, 250, 0.32);
     }
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
-        --bg-base: #0b0f1a;
+        --bg-base: #0a0e19;
         --bg-mesh:
-          radial-gradient(110% 75% at 10% 5%, rgba(96, 165, 250, 0.24) 0%, transparent 55%),
-          radial-gradient(100% 75% at 92% 14%, rgba(167, 139, 250, 0.26) 0%, transparent 56%),
-          radial-gradient(90% 70% at 86% 90%, rgba(251, 146, 60, 0.16) 0%, transparent 54%),
-          radial-gradient(90% 70% at 14% 88%, rgba(52, 211, 153, 0.16) 0%, transparent 55%),
-          linear-gradient(160deg, #0b0f1a 0%, #101627 55%, #0c1220 100%);
-        --glass: rgba(24, 32, 50, 0.54);
-        --glass-strong: rgba(30, 40, 62, 0.68);
-        --glass-soft: rgba(15, 23, 42, 0.36);
-        --glass-edge: rgba(255, 255, 255, 0.18);
+          radial-gradient(110% 75% at 10% 5%, rgba(96, 165, 250, 0.25) 0%, transparent 55%),
+          radial-gradient(100% 75% at 92% 14%, rgba(167, 139, 250, 0.28) 0%, transparent 56%),
+          radial-gradient(90% 70% at 86% 90%, rgba(251, 146, 60, 0.17) 0%, transparent 54%),
+          radial-gradient(90% 70% at 14% 88%, rgba(52, 211, 153, 0.17) 0%, transparent 55%),
+          linear-gradient(160deg, #0a0e19 0%, #101729 55%, #0c1221 100%);
+        --glass: rgba(24, 33, 52, 0.52);
+        --glass-strong: rgba(32, 43, 68, 0.70);
+        --glass-soft: rgba(15, 23, 42, 0.38);
+        --glass-edge: rgba(255, 255, 255, 0.19);
         --glass-rim: rgba(167, 139, 250, 0.22);
-        --glass-top: rgba(255, 255, 255, 0.26);
-        --glass-sheen: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.03) 38%, rgba(255, 255, 255, 0) 64%);
+        --glass-top: rgba(255, 255, 255, 0.28);
+        --glass-sheen: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 36%, rgba(255, 255, 255, 0) 64%);
         --track-bg: rgba(255, 255, 255, 0.10);
         --text: #f1f5f9;
         --muted: #9eb0c9;
-        --shadow: 0 10px 28px rgba(0, 0, 0, 0.38), 0 1px 2px rgba(0, 0, 0, 0.24);
+        --shadow: 0 12px 32px rgba(0, 0, 0, 0.42), 0 1px 2px rgba(0, 0, 0, 0.26);
+        --orb-a: rgba(96, 165, 250, 0.22);
+        --orb-b: rgba(167, 139, 250, 0.24);
       }
     }
     :root[data-theme="dark"] {
-      --bg-base: #0b0f1a;
+      --bg-base: #0a0e19;
       --bg-mesh:
-        radial-gradient(110% 75% at 10% 5%, rgba(96, 165, 250, 0.24) 0%, transparent 55%),
-        radial-gradient(100% 75% at 92% 14%, rgba(167, 139, 250, 0.26) 0%, transparent 56%),
-        radial-gradient(90% 70% at 86% 90%, rgba(251, 146, 60, 0.16) 0%, transparent 54%),
-        radial-gradient(90% 70% at 14% 88%, rgba(52, 211, 153, 0.16) 0%, transparent 55%),
-        linear-gradient(160deg, #0b0f1a 0%, #101627 55%, #0c1220 100%);
-      --glass: rgba(24, 32, 50, 0.54);
-      --glass-strong: rgba(30, 40, 62, 0.68);
-      --glass-soft: rgba(15, 23, 42, 0.36);
-      --glass-edge: rgba(255, 255, 255, 0.18);
+        radial-gradient(110% 75% at 10% 5%, rgba(96, 165, 250, 0.25) 0%, transparent 55%),
+        radial-gradient(100% 75% at 92% 14%, rgba(167, 139, 250, 0.28) 0%, transparent 56%),
+        radial-gradient(90% 70% at 86% 90%, rgba(251, 146, 60, 0.17) 0%, transparent 54%),
+        radial-gradient(90% 70% at 14% 88%, rgba(52, 211, 153, 0.17) 0%, transparent 55%),
+        linear-gradient(160deg, #0a0e19 0%, #101729 55%, #0c1221 100%);
+      --glass: rgba(24, 33, 52, 0.52);
+      --glass-strong: rgba(32, 43, 68, 0.70);
+      --glass-soft: rgba(15, 23, 42, 0.38);
+      --glass-edge: rgba(255, 255, 255, 0.19);
       --glass-rim: rgba(167, 139, 250, 0.22);
-      --glass-top: rgba(255, 255, 255, 0.26);
-      --glass-sheen: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.03) 38%, rgba(255, 255, 255, 0) 64%);
+      --glass-top: rgba(255, 255, 255, 0.28);
+      --glass-sheen: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 36%, rgba(255, 255, 255, 0) 64%);
       --track-bg: rgba(255, 255, 255, 0.10);
       --text: #f1f5f9;
       --muted: #9eb0c9;
-      --shadow: 0 10px 28px rgba(0, 0, 0, 0.38), 0 1px 2px rgba(0, 0, 0, 0.24);
+      --shadow: 0 12px 32px rgba(0, 0, 0, 0.42), 0 1px 2px rgba(0, 0, 0, 0.26);
+      --orb-a: rgba(96, 165, 250, 0.22);
+      --orb-b: rgba(167, 139, 250, 0.24);
     }
     * { box-sizing: border-box; }
     html, body { min-height: 100%; }
@@ -87,45 +93,78 @@
       font-family: "Segoe UI", "Microsoft YaHei UI", system-ui, -apple-system, sans-serif;
       font-size: 12.5px;
       line-height: 1.45;
+      font-variant-numeric: tabular-nums;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    /* 极柔和的呼吸星云流光背景球，增强液态玻璃折射深度 */
+    .ambient-orb {
+      position: fixed;
+      border-radius: 999px;
+      filter: blur(52px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.72;
+    }
+    .orb-1 {
+      width: 190px;
+      height: 190px;
+      top: -40px;
+      left: -40px;
+      background: var(--orb-a);
+      animation: orb-drift 14s ease-in-out infinite alternate;
+    }
+    .orb-2 {
+      width: 210px;
+      height: 210px;
+      bottom: -50px;
+      right: -50px;
+      background: var(--orb-b);
+      animation: orb-drift 17s ease-in-out infinite alternate-reverse;
+    }
+    @keyframes orb-drift {
+      0%   { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(22px, 16px) scale(1.1); }
     }
     .panel {
+      position: relative;
+      z-index: 1;
       max-width: 440px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 9px;
     }
     /* 液态玻璃通用材质 */
-    .header, .tab-chip, .quota-mini, .card {
+    .header, .context-bar, .tab-chip, .quota-mini, .card {
       position: relative;
       overflow: hidden;
       background: var(--glass);
-      backdrop-filter: blur(20px) saturate(185%);
-      -webkit-backdrop-filter: blur(20px) saturate(185%);
+      backdrop-filter: blur(22px) saturate(190%);
+      -webkit-backdrop-filter: blur(22px) saturate(190%);
       border: 1px solid var(--glass-edge);
       box-shadow: var(--shadow), inset 0 1px 0 var(--glass-top), inset 0 -1px 0 rgba(255, 255, 255, 0.08);
     }
-    .header::before, .card::before, .quota-mini::before, .tab-chip::before {
+    .header::before, .context-bar::before, .card::before, .quota-mini::before, .tab-chip::before {
       content: "";
       position: absolute;
       inset: 0;
       background: var(--glass-sheen);
       pointer-events: none;
     }
-    .header > *, .card > *, .quota-mini > *, .tab-chip > * {
+    .header > *, .context-bar > *, .card > *, .quota-mini > *, .tab-chip > * {
       position: relative;
       z-index: 1;
     }
 
-    /* 顶栏：大号猫猫动态头像 + 响应式两段式控制区 */
+    /* 顶栏：大号猫猫动态头像 + 响应式控制区 */
     .header {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
       gap: 9px 10px;
-      border-radius: 17px;
+      border-radius: 18px;
       padding: 10px 12px;
     }
     .brand {
@@ -136,26 +175,26 @@
       flex: 1 1 175px;
     }
     .cat-avatar {
-      width: 54px;
-      height: 54px;
-      border-radius: 15px;
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
       flex-shrink: 0;
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center;
-      border: 1.5px solid rgba(255, 255, 255, 0.78);
-      box-shadow: 0 0 0 1.5px rgba(167, 139, 250, 0.48), 0 5px 14px rgba(96, 165, 250, 0.28);
+      border: 1.5px solid rgba(255, 255, 255, 0.82);
+      box-shadow: 0 0 0 1.5px rgba(167, 139, 250, 0.48), 0 6px 16px rgba(96, 165, 250, 0.30);
       cursor: pointer;
       user-select: none;
-      transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease;
+      transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease;
     }
     .cat-avatar:hover {
       transform: scale(1.07);
-      box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.78), 0 7px 18px rgba(96, 165, 250, 0.44);
+      box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.80), 0 8px 20px rgba(96, 165, 250, 0.45);
     }
     .cat-avatar:active { transform: scale(0.94); }
     .cat-avatar.overheat {
-      box-shadow: 0 0 0 2.5px rgba(244, 63, 94, 0.75), 0 0 20px rgba(251, 146, 60, 0.65);
+      box-shadow: 0 0 0 2.5px rgba(244, 63, 94, 0.78), 0 0 22px rgba(251, 146, 60, 0.68);
       animation: cat-wiggle 0.35s ease-in-out 2;
     }
     @keyframes cat-wiggle {
@@ -163,7 +202,6 @@
       25% { transform: rotate(-6deg) scale(1.06); }
       75% { transform: rotate(6deg) scale(1.06); }
     }
-    /* 四表情独立高清头像 */
     .cat-avatar.mood-happy   { background-image: url('/avatars/happy.png'); }
     .cat-avatar.mood-curious { background-image: url('/avatars/curious.png'); }
     .cat-avatar.mood-sleepy  { background-image: url('/avatars/sleepy.png'); }
@@ -220,7 +258,8 @@
       flex-shrink: 0;
       transition: transform 0.14s ease, border-color 0.18s ease, background 0.18s ease;
     }
-    select { padding: 0 8px; flex: 1 1 110px; min-width: 96px; max-width: 165px; }
+    select { padding: 0 8px; }
+    #group-select { flex: 1 1 110px; min-width: 96px; max-width: 165px; }
     .icon-btn {
       width: 28px;
       display: inline-flex;
@@ -230,28 +269,62 @@
     }
     .icon-btn:hover, select:hover, .style-btn:hover {
       background: var(--glass-strong);
-      border-color: rgba(167, 139, 250, 0.55);
+      border-color: rgba(167, 139, 250, 0.58);
     }
     .icon-btn:active { transform: scale(0.93); }
-    .model-bar {
+    .icon-btn.spinning { animation: spin 0.6s linear infinite; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    /* 模型 + 对话切换整合玻璃条 */
+    .context-bar {
       display: flex;
-      justify-content: space-between;
+      flex-wrap: wrap;
       align-items: center;
-      padding: 2px 6px;
-      font-size: 11.5px;
-      color: var(--muted);
+      justify-content: space-between;
+      gap: 6px 8px;
+      border-radius: 13px;
+      padding: 7px 10px;
     }
-    .model-bar strong { color: var(--text); font-weight: 650; }
+    .model-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11.5px;
+      font-weight: 650;
+      color: var(--text);
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .star-badge {
+      background: var(--rainbow);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+    #conv-select {
+      height: 24px;
+      font-size: 11px;
+      border-radius: 8px;
+      padding: 0 6px;
+      flex: 1 1 130px;
+      min-width: 110px;
+      max-width: 195px;
+      text-overflow: ellipsis;
+    }
 
     /* 三枚液态胶囊 Tab 芯片 */
     .tabs {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 8px;
     }
     .tab-chip {
       text-align: left;
-      border-radius: 14px;
+      border-radius: 15px;
       padding: 9px 10px;
       cursor: pointer;
       color: var(--text);
@@ -261,20 +334,29 @@
       gap: 2px;
     }
     .tab-chip:hover {
-      transform: translateY(-1px);
+      transform: translateY(-1.5px);
       background: var(--glass-strong);
-      border-color: rgba(167, 139, 250, 0.55);
+      border-color: rgba(167, 139, 250, 0.58);
     }
     .tab-chip:active { transform: scale(0.98); }
     .tab-chip[aria-selected="true"] {
-      background: linear-gradient(145deg, rgba(96, 165, 250, 0.22), rgba(167, 139, 250, 0.24));
-      border-color: rgba(167, 139, 250, 0.72);
-      box-shadow: 0 6px 18px rgba(139, 92, 246, 0.18), inset 0 1px 0 var(--glass-top), inset 0 0 12px rgba(255, 255, 255, 0.18);
+      background: linear-gradient(145deg, rgba(96, 165, 250, 0.22), rgba(167, 139, 250, 0.25));
+      border-color: rgba(167, 139, 250, 0.78);
+      box-shadow: 0 6px 20px rgba(139, 92, 246, 0.20), inset 0 1px 0 var(--glass-top), inset 0 0 14px rgba(255, 255, 255, 0.20);
     }
-    .chip-title { font-size: 11px; color: var(--muted); }
-    .chip-val { font-size: 15.5px; font-weight: 750; letter-spacing: -0.2px; }
+    .tab-chip.ctx-alert {
+      border-color: rgba(245, 158, 11, 0.85);
+      box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.32), 0 6px 18px rgba(245, 158, 11, 0.24), inset 0 1px 0 var(--glass-top);
+      animation: pulse-warn 2.6s ease-in-out infinite;
+    }
+    @keyframes pulse-warn {
+      0%, 100% { box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.28), 0 4px 14px rgba(245, 158, 11, 0.18), inset 0 1px 0 var(--glass-top); }
+      50%      { box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.52), 0 6px 20px rgba(245, 158, 11, 0.34), inset 0 1px 0 var(--glass-top); }
+    }
+    .chip-title { font-size: 11px; color: var(--muted); white-space: nowrap; }
+    .chip-val { font-size: 15.5px; font-weight: 750; letter-spacing: -0.2px; white-space: nowrap; }
     .chip-val small { font-size: 10.5px; font-weight: 500; color: var(--muted); margin-left: 2px; }
-    .chip-sub { font-size: 10.5px; color: var(--muted); }
+    .chip-sub { font-size: 10.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
     /* 常驻双额度玻璃卡 */
     .quota-mini-grid {
@@ -283,7 +365,7 @@
       gap: 8px;
     }
     .quota-mini {
-      border-radius: 14px;
+      border-radius: 15px;
       padding: 9px 11px;
     }
     .qm-head, .qm-foot {
@@ -291,6 +373,7 @@
       justify-content: space-between;
       align-items: center;
       font-size: 11px;
+      gap: 4px;
     }
     .qm-head strong { font-size: 13.5px; }
     .qm-foot { color: var(--muted); margin-top: 5px; font-size: 10.5px; }
@@ -307,23 +390,28 @@
       height: 100%;
       border-radius: 99px;
       background: var(--rainbow);
-      box-shadow: 0 0 10px rgba(167, 139, 250, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.45);
-      transition: width 0.35s ease;
+      box-shadow: 0 0 10px rgba(167, 139, 250, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.48);
+      transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .fill.warn { background: linear-gradient(90deg, #fb923c, #f59e0b); box-shadow: 0 0 10px rgba(245, 158, 11, 0.38); }
-    .fill.danger { background: linear-gradient(90deg, #f43f5e, #fb7185); box-shadow: 0 0 10px rgba(244, 63, 94, 0.42); }
+    .fill.warn { background: linear-gradient(90deg, #fb923c, #f59e0b); box-shadow: 0 0 10px rgba(245, 158, 11, 0.42); }
+    .fill.danger { background: linear-gradient(90deg, #f43f5e, #fb7185); box-shadow: 0 0 10px rgba(244, 63, 94, 0.46); }
     .forecast-tail {
       position: absolute;
       top: 0;
       bottom: 0;
-      background: repeating-linear-gradient(-45deg, rgba(245,158,11,0.5), rgba(245,158,11,0.5) 3px, transparent 3px, transparent 6px);
+      background: repeating-linear-gradient(-45deg, rgba(245,158,11,0.52), rgba(245,158,11,0.52) 3px, transparent 3px, transparent 6px);
       pointer-events: none;
     }
 
     /* 液态玻璃详情卡 */
     .card {
-      border-radius: 16px;
+      border-radius: 17px;
       padding: 13px;
+      animation: card-in 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    @keyframes card-in {
+      from { opacity: 0.45; transform: translateY(5px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
     .card[hidden] { display: none; }
     .hero {
@@ -349,6 +437,17 @@
       color: #10b981;
       vertical-align: middle;
     }
+    .pill-warn {
+      display: inline-block;
+      margin-left: 6px;
+      padding: 1px 7px;
+      border-radius: 99px;
+      font-size: 10.5px;
+      font-weight: 600;
+      background: rgba(245, 158, 11, 0.18);
+      border: 1px solid rgba(245, 158, 11, 0.45);
+      color: var(--warning);
+    }
     .trail-box {
       display: flex;
       align-items: center;
@@ -357,7 +456,7 @@
       flex: 1 1 160px;
       min-width: 0;
     }
-    .spark { flex: 1; min-width: 84px; max-width: 148px; height: 44px; overflow: visible; filter: drop-shadow(0 2px 6px rgba(167, 139, 250, 0.22)); }
+    .spark { flex: 1; min-width: 84px; max-width: 148px; height: 44px; overflow: visible; filter: drop-shadow(0 3px 8px rgba(167, 139, 250, 0.28)); }
     .style-btn {
       height: 25px;
       padding: 0 9px;
@@ -377,7 +476,7 @@
       background: var(--glass-soft);
       border: 1px solid var(--glass-rim);
       box-shadow: inset 0 1px 0 var(--glass-top);
-      border-radius: 11px;
+      border-radius: 12px;
       padding: 8px 8px;
       min-width: 0;
     }
@@ -401,9 +500,9 @@
       box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12);
       margin-bottom: 11px;
     }
-    .seg-read { background: linear-gradient(90deg, #34d399, #10b981); }
-    .seg-miss { background: linear-gradient(90deg, #60a5fa, #3b82f6); }
-    .seg-out  { background: linear-gradient(90deg, #c084fc, #a78bfa); }
+    .seg-read { background: linear-gradient(90deg, #34d399, #10b981); transition: width 0.35s ease; }
+    .seg-miss { background: linear-gradient(90deg, #60a5fa, #3b82f6); transition: width 0.35s ease; }
+    .seg-out  { background: linear-gradient(90deg, #c084fc, #a78bfa); transition: width 0.35s ease; }
 
     .quota-block {
       background: var(--glass-soft);
@@ -420,9 +519,8 @@
     .foot-status {
       text-align: center;
       font-size: 11px;
-      color: var(--muted);
-      padding: 2px 4px;
-      opacity: 0.85;
+      color: var(--warning);
+      padding: 3px 6px;
     }
     /* 星芒飘散粒子 */
     .star-particle {
@@ -445,9 +543,11 @@
       .panel { gap: 8px; }
       .header { padding: 9px 10px; }
       .controls { width: 100%; justify-content: space-between; }
-      select { max-width: none; }
+      #group-select { max-width: none; }
+      .context-bar { padding: 7px 9px; }
+      #conv-select { max-width: none; width: 100%; }
       .tabs { gap: 6px; }
-      .tab-chip { padding: 7px 8px; border-radius: 12px; }
+      .tab-chip { padding: 7px 8px; border-radius: 13px; }
       .chip-val { font-size: 14px; }
       .chip-sub { font-size: 10px; }
       .quota-mini-grid { gap: 6px; }
@@ -466,6 +566,9 @@
   </style>
 </head>
 <body>
+  <div class="ambient-orb orb-1" aria-hidden="true"></div>
+  <div class="ambient-orb orb-2" aria-hidden="true"></div>
+
   <main class="panel">
     <header class="header">
       <div class="brand">
@@ -485,10 +588,15 @@
       </div>
     </header>
 
-    <div class="model-bar">
-      <span>当前采样模型</span>
-      <strong id="model-name">—</strong>
-    </div>
+    <section class="context-bar">
+      <div class="model-pill" title="当前采样模型">
+        <span class="star-badge">✦</span>
+        <span id="model-name">等待采样</span>
+      </div>
+      <select id="conv-select" title="切换查看历史对话">
+        <option value="">自动跟随最新对话</option>
+      </select>
+    </section>
 
     <nav class="tabs" role="tablist">
       <button class="tab-chip" type="button" role="tab" data-tab="speed" aria-selected="true">
@@ -501,7 +609,7 @@
         <span class="chip-val" id="chip-hit">—</span>
         <span class="chip-sub" id="chip-tok">— tok</span>
       </button>
-      <button class="tab-chip" type="button" role="tab" data-tab="context" aria-selected="false">
+      <button id="tab-context" class="tab-chip" type="button" role="tab" data-tab="context" aria-selected="false">
         <span class="chip-title">上下文</span>
         <span class="chip-val" id="chip-ctx">—</span>
         <span class="chip-sub" id="chip-ctx-size">—</span>
@@ -530,7 +638,7 @@
         </div>
         <div class="trail-box">
           <svg id="spark-svg" class="spark" viewBox="0 0 126 46"></svg>
-          <button id="curve-toggle" class="style-btn active" type="button" title="切换星芒阶梯/平滑曲线">✦ 阶梯</button>
+          <button id="curve-toggle" class="style-btn active" type="button" title="切换平滑/阶梯曲线">〜 平滑</button>
         </div>
       </div>
       <dl class="stats-grid">
@@ -571,7 +679,7 @@
     <!-- Tab 3: 上下文与额度预测 -->
     <article id="card-context" class="card" hidden>
       <div class="qb-head">
-        <span>上下文窗口占用</span>
+        <span>上下文窗口占用<span id="ctx-compact-pill" class="pill-warn" hidden>建议 /compact</span></span>
         <strong id="ctx-detail">—</strong>
       </div>
       <div class="track" style="height:8px;margin-top:6px"><div id="ctx-fill" class="fill" style="width:0%"></div></div>
@@ -599,14 +707,27 @@
   <script>
     (() => {
       const $ = (id) => document.getElementById(id);
+      const prefGet = (k, d = null) => { try { const v = localStorage.getItem(k); return v === null ? d : v; } catch { return d; } };
+      const prefSet = (k, v) => { try { localStorage.setItem(k, v); } catch {} };
+
       let snap = null;
       let selectedGroupId = null;
+      let selectedConvId = "";
       let serverOffset = 0;
-      let stepStyle = true;
+      let stepStyle = prefGet("ag-pulse-curve", "smooth") === "step";
+      let activeTab = prefGet("ag-pulse-tab", "speed");
       let manualMoodIdx = -1;
       let pokeCount = 0;
       let lastPokeAt = 0;
-      const MOODS = ["mood-happy", "mood-smug", "mood-curious", "mood-sleepy"];
+      let speechCursor = 0;
+
+      // 恢复记忆的主题与曲线样式
+      const savedTheme = prefGet("ag-pulse-theme");
+      if (savedTheme === "dark" || savedTheme === "light") {
+        document.documentElement.dataset.theme = savedTheme;
+      }
+      $("curve-toggle").textContent = stepStyle ? "✦ 阶梯" : "〜 平滑";
+
       const SPEECH_POKE = [
         ["mood-smug", "哼哼，本猫亲自盯着算力，稳得很 ✦"],
         ["mood-happy", "呼噜…才、才没有被摸得很舒服呢 ✦"],
@@ -616,7 +737,6 @@
         ["mood-sleepy", "再乱拉尾巴我就要哈气亮肉垫了哦…"],
         ["mood-happy", "哼，看在你这么专心的份上陪你盯着吧 ✦"]
       ];
-      let speechCursor = 0;
 
       function spawnStars(el, count = 4) {
         const rect = el.getBoundingClientRect();
@@ -631,7 +751,7 @@
           sp.style.top = `${cy + (Math.random() - 0.5) * 20}px`;
           sp.style.color = colors[i % colors.length];
           const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.6;
-          const dist = 26 + Math.random() * 22;
+          const dist = 28 + Math.random() * 24;
           sp.style.setProperty("--dx", `${Math.round(Math.cos(angle) * dist)}px`);
           sp.style.setProperty("--dy", `${Math.round(Math.sin(angle) * dist - 12)}px`);
           document.body.appendChild(sp);
@@ -668,32 +788,41 @@
         return `${m}分 ${s % 60}秒`;
       }
 
-      // Tab 切换
-      document.querySelectorAll(".tab-chip").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const target = btn.dataset.tab;
-          document.querySelectorAll(".tab-chip").forEach((b) => b.setAttribute("aria-selected", String(b === btn)));
-          ["speed", "cache", "context"].forEach((k) => {
-            $(`card-${k}`).hidden = k !== target;
-          });
+      function selectTab(target) {
+        if (!["speed", "cache", "context"].includes(target)) target = "speed";
+        activeTab = target;
+        prefSet("ag-pulse-tab", target);
+        document.querySelectorAll(".tab-chip").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === target)));
+        ["speed", "cache", "context"].forEach((k) => {
+          $(`card-${k}`).hidden = k !== target;
         });
+      }
+      selectTab(activeTab);
+
+      document.querySelectorAll(".tab-chip").forEach((btn) => {
+        btn.addEventListener("click", () => selectTab(btn.dataset.tab));
       });
 
-      // 主题切换
       $("theme-btn").addEventListener("click", () => {
         const cur = document.documentElement.dataset.theme;
         const darkNow = cur ? cur === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
-        document.documentElement.dataset.theme = darkNow ? "light" : "dark";
+        const next = darkNow ? "light" : "dark";
+        document.documentElement.dataset.theme = next;
+        prefSet("ag-pulse-theme", next);
       });
 
-      // 曲线风格切换
       $("curve-toggle").addEventListener("click", () => {
         stepStyle = !stepStyle;
+        prefSet("ag-pulse-curve", stepStyle ? "step" : "smooth");
         $("curve-toggle").textContent = stepStyle ? "✦ 阶梯" : "〜 平滑";
         if (snap) renderSpark(snap.speed?.recentTps || []);
       });
 
-      // 戳猫猫互动（带星芒飘散 + 5连戳过热彩蛋）
+      $("conv-select").addEventListener("change", (e) => {
+        selectedConvId = e.target.value || "";
+        poll(false);
+      });
+
       $("cat-avatar").addEventListener("click", () => {
         const el = $("cat-avatar");
         const now = Date.now();
@@ -724,7 +853,10 @@
         if (snap) renderQuotaOnly();
       });
 
-      $("refresh-btn").addEventListener("click", () => poll(true));
+      $("refresh-btn").addEventListener("click", async () => {
+        $("refresh-btn").classList.add("spinning");
+        try { await poll(true); } finally { setTimeout(() => $("refresh-btn").classList.remove("spinning"), 350); }
+      });
 
       function applyMood(moodClass, speech) {
         const el = $("cat-avatar");
@@ -742,7 +874,7 @@
         }
         const m = String(snap?.speed?.model || "").toLowerCase();
         if (m.includes("claude") || m.includes("gpt")) {
-          const g = groups.find((x) => /claude|gpt|argon|other/i.test(x.id + x.name));
+          const g = groups.find((x) => /claude|gpt|3p|argon|other/i.test(x.id + x.name));
           if (g) return g;
         }
         return groups[0];
@@ -752,6 +884,11 @@
         if (manualMoodIdx >= 0 || !snap) return;
         if (snap.connection !== "live") {
           applyMood("mood-sleepy", "连接休眠中，等待星轨唤醒…");
+          return;
+        }
+        const ctxFrac = snap.speed?.context?.usedFraction;
+        if (typeof ctxFrac === "number" && ctxFrac >= 0.8) {
+          applyMood("mood-curious", `上下文已达 ${Math.round(ctxFrac * 100)}%，建议 /compact 啦～`);
           return;
         }
         const grp = activeGroup();
@@ -795,13 +932,10 @@
         });
         let d = `M${pts[0][0]} ${pts[0][1]}`;
         if (stepStyle) {
-          for (let i = 1; i < pts.length; i++) {
-            d += ` H${pts[i][0]} V${pts[i][1]}`;
-          }
+          for (let i = 1; i < pts.length; i++) d += ` H${pts[i][0]} V${pts[i][1]}`;
         } else if (pts.length === 2) {
           d += ` L${pts[1][0]} ${pts[1][1]}`;
         } else if (pts.length > 2) {
-          // 单调三次贝塞尔平滑插值（避免过冲同时保持圆润流动感）
           const slopes = [];
           for (let i = 0; i < pts.length - 1; i++) {
             const dx = pts[i + 1][0] - pts[i][0] || 1;
@@ -831,12 +965,12 @@
               <stop offset="100%" stop-color="#34d399"/>
             </linearGradient>
             <linearGradient id="spFill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.32"/>
+              <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.34"/>
               <stop offset="100%" stop-color="#60a5fa" stop-opacity="0.02"/>
             </linearGradient>
           </defs>
           <path d="${area}" fill="url(#spFill)"/>
-          <path d="${d}" fill="none" stroke="url(#spLine)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="${d}" fill="none" stroke="url(#spLine)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M${last[0]} ${last[1]-5.5} L${last[0]+1.8} ${last[1]-1.8} L${last[0]+5.5} ${last[1]} L${last[0]+1.8} ${last[1]+1.8} L${last[0]} ${last[1]+5.5} L${last[0]-1.8} ${last[1]+1.8} L${last[0]-5.5} ${last[1]} L${last[0]-1.8} ${last[1]-1.8} Z" fill="#fbbf24"/>
         `;
       }
@@ -897,9 +1031,9 @@
 
       function renderAll() {
         if (!snap) return;
-        const dot = $("conn-dot");
-        dot.className = "dot " + (snap.connection || "offline");
+        $("conn-dot").className = "dot " + (snap.connection || "offline");
 
+        // 额度组下拉
         const groups = snap.groups || [];
         const sel = $("group-select");
         const cnGroupName = (name) => {
@@ -917,6 +1051,21 @@
         const grp = activeGroup();
         if (grp) sel.value = grp.id;
 
+        // 对话切换下拉
+        const convs = snap.conversations || [];
+        const convSel = $("conv-select");
+        const convKey = convs.map((c) => `${c.id}:${c.title}:${c.steps}`).join("|");
+        if (convSel.dataset.key !== convKey) {
+          convSel.innerHTML = "";
+          convSel.add(new Option("自动跟随最新对话", ""));
+          convs.forEach((c) => {
+            const label = c.title.length > 16 ? c.title.slice(0, 16) + "…" : c.title;
+            convSel.add(new Option(`${label} (${c.steps}步)`, c.id));
+          });
+          convSel.dataset.key = convKey;
+        }
+        convSel.value = selectedConvId;
+
         const sp = snap.speed;
         $("model-name").textContent = sp?.model || "等待采样";
         $("chip-tps").textContent = sp?.latestTps ?? sp?.tps ?? "—";
@@ -927,8 +1076,12 @@
         $("chip-tok").textContent = cache ? `${fmtNum(cache.totalTokens)} tok` : "— tok";
 
         const ctx = sp?.context;
-        $("chip-ctx").textContent = fmtPct(ctx?.usedFraction);
+        const ctxFrac = ctx?.usedFraction;
+        const highCtx = typeof ctxFrac === "number" && ctxFrac >= 0.8;
+        $("chip-ctx").textContent = fmtPct(ctxFrac);
         $("chip-ctx-size").textContent = ctx ? `${fmtNum(ctx.usedTokens)}/${fmtNum(ctx.maxTokens)}` : "—";
+        $("tab-context").classList.toggle("ctx-alert", highCtx);
+        $("ctx-compact-pill").hidden = !highCtx;
 
         // 速度卡
         $("latest-tps").textContent = sp?.latestTps ?? "—";
@@ -953,9 +1106,12 @@
         $("seg-out").style.width = tot ? `${(cache.outputTokens / tot) * 100}%` : "0%";
 
         // 上下文卡
-        $("ctx-detail").textContent = ctx ? `${fmtPct(ctx.usedFraction)} (${fmtNum(ctx.usedTokens)} / ${fmtNum(ctx.maxTokens)})` : "暂无数据";
-        paintBar($("ctx-fill"), ctx?.usedFraction != null ? 1 - ctx.usedFraction : 0, false);
-        $("ctx-fill").style.width = ctx?.usedFraction != null ? `${Math.min(100, ctx.usedFraction * 100)}%` : "0%";
+        $("ctx-detail").textContent = ctx ? `${fmtPct(ctxFrac)} (${fmtNum(ctx.usedTokens)} / ${fmtNum(ctx.maxTokens)})` : "暂无数据";
+        const ctxFill = $("ctx-fill");
+        ctxFill.style.width = typeof ctxFrac === "number" ? `${Math.min(100, ctxFrac * 100)}%` : "0%";
+        ctxFill.classList.remove("warn", "danger");
+        if (typeof ctxFrac === "number" && ctxFrac >= 0.92) ctxFill.classList.add("danger");
+        else if (highCtx) ctxFill.classList.add("warn");
 
         renderQuotaOnly();
         const foot = $("foot-status");
@@ -971,7 +1127,11 @@
       async function poll(force = false) {
         try {
           const transport = window.sidecar?.fetch ? window.sidecar.fetch.bind(window.sidecar) : fetch;
-          const res = await transport(`/api/metrics${force ? "?force=1" : ""}`, { cache: "no-store" });
+          const params = new URLSearchParams();
+          if (force) params.set("force", "1");
+          if (selectedConvId) params.set("conversationId", selectedConvId);
+          const qs = params.toString() ? `?${params.toString()}` : "";
+          const res = await transport(`/api/metrics${qs}`, { cache: "no-store" });
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
           snap = await res.json();
           if (typeof snap.serverTimeMs === "number") serverOffset = snap.serverTimeMs - Date.now();
@@ -984,8 +1144,8 @@
         }
       }
 
-      // 接收 Antigravity 宿主主题变更
       window.addEventListener("message", (ev) => {
+        if (prefGet("ag-pulse-theme")) return;
         const theme = ev?.data?.theme || ev?.data?.colorTheme;
         if (theme === "dark" || theme === "light") document.documentElement.dataset.theme = theme;
       });

@@ -62,7 +62,8 @@ class PanelHandler(BaseHTTPRequestHandler):
         if path == "/api/metrics":
             qs = parse_qs(parsed.query)
             force = qs.get("force", ["0"])[0] in ("1", "true")
-            data = COLLECTOR.snapshot(force_quota=force)
+            cid = (qs.get("conversationId", [""])[0] or "").strip() or None
+            data = COLLECTOR.snapshot(force_quota=force, conversation_id=cid)
             body = json.dumps(data, ensure_ascii=False).encode("utf-8")
             self._send_bytes(200, "application/json; charset=utf-8", body)
             return
