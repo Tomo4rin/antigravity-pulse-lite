@@ -1,0 +1,21 @@
+{
+  "command": "python",
+  "args": [
+    "-B",
+    "server.py"
+  ],
+  "restart_policy": "always",
+  "display_name": "星轨猫猫仪表盘",
+  "description": "轻量纯中文 Windows 侧栏仪表盘，展示实时速率、缓存命中、上下文与共享额度。",
+  "has_web_ui": true,
+  "ui_config": {
+    "display_name": "星轨猫猫仪表盘",
+    "views": [
+      {
+        "path": "/",
+        "entrypoint": "SIDECAR_UI_ENTRYPOINT_AUX_PANE",
+        "title": "星轨猫猫仪表盘"
+      }
+    ]
+  }
+}

@@ -1,0 +1,986 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>星轨猫猫仪表盘</title>
+  <script src="/preload.js"></script>
+  <style>
+    :root {
+      --bg-base: #eef2ff;
+      --bg-mesh:
+        radial-gradient(120% 80% at 8% 4%, rgba(96, 165, 250, 0.28) 0%, transparent 55%),
+        radial-gradient(100% 75% at 94% 12%, rgba(167, 139, 250, 0.28) 0%, transparent 56%),
+        radial-gradient(95% 75% at 85% 92%, rgba(251, 146, 60, 0.20) 0%, transparent 54%),
+        radial-gradient(95% 75% at 12% 88%, rgba(52, 211, 153, 0.20) 0%, transparent 55%),
+        linear-gradient(160deg, #f5f7ff 0%, #eef2fb 50%, #f3f6fc 100%);
+      --glass: rgba(255, 255, 255, 0.56);
+      --glass-strong: rgba(255, 255, 255, 0.72);
+      --glass-soft: rgba(255, 255, 255, 0.42);
+      --glass-edge: rgba(255, 255, 255, 0.75);
+      --glass-rim: rgba(99, 102, 241, 0.14);
+      --glass-top: rgba(255, 255, 255, 0.92);
+      --glass-sheen: linear-gradient(135deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.12) 38%, rgba(255, 255, 255, 0) 64%);
+      --track-bg: rgba(15, 23, 42, 0.08);
+      --text: #0f172a;
+      --muted: #52627a;
+      --accent-blue: #60a5fa;
+      --accent-purple: #a78bfa;
+      --accent-orange: #fb923c;
+      --accent-green: #34d399;
+      --danger: #f43f5e;
+      --warning: #f59e0b;
+      --rainbow: linear-gradient(90deg, #60a5fa 0%, #a78bfa 38%, #fb923c 72%, #34d399 100%);
+      --shadow: 0 8px 24px rgba(30, 41, 59, 0.08), 0 1px 3px rgba(30, 41, 59, 0.05);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg-base: #0b0f1a;
+        --bg-mesh:
+          radial-gradient(110% 75% at 10% 5%, rgba(96, 165, 250, 0.24) 0%, transparent 55%),
+          radial-gradient(100% 75% at 92% 14%, rgba(167, 139, 250, 0.26) 0%, transparent 56%),
+          radial-gradient(90% 70% at 86% 90%, rgba(251, 146, 60, 0.16) 0%, transparent 54%),
+          radial-gradient(90% 70% at 14% 88%, rgba(52, 211, 153, 0.16) 0%, transparent 55%),
+          linear-gradient(160deg, #0b0f1a 0%, #101627 55%, #0c1220 100%);
+        --glass: rgba(24, 32, 50, 0.54);
+        --glass-strong: rgba(30, 40, 62, 0.68);
+        --glass-soft: rgba(15, 23, 42, 0.36);
+        --glass-edge: rgba(255, 255, 255, 0.18);
+        --glass-rim: rgba(167, 139, 250, 0.22);
+        --glass-top: rgba(255, 255, 255, 0.26);
+        --glass-sheen: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.03) 38%, rgba(255, 255, 255, 0) 64%);
+        --track-bg: rgba(255, 255, 255, 0.10);
+        --text: #f1f5f9;
+        --muted: #9eb0c9;
+        --shadow: 0 10px 28px rgba(0, 0, 0, 0.38), 0 1px 2px rgba(0, 0, 0, 0.24);
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg-base: #0b0f1a;
+      --bg-mesh:
+        radial-gradient(110% 75% at 10% 5%, rgba(96, 165, 250, 0.24) 0%, transparent 55%),
+        radial-gradient(100% 75% at 92% 14%, rgba(167, 139, 250, 0.26) 0%, transparent 56%),
+        radial-gradient(90% 70% at 86% 90%, rgba(251, 146, 60, 0.16) 0%, transparent 54%),
+        radial-gradient(90% 70% at 14% 88%, rgba(52, 211, 153, 0.16) 0%, transparent 55%),
+        linear-gradient(160deg, #0b0f1a 0%, #101627 55%, #0c1220 100%);
+      --glass: rgba(24, 32, 50, 0.54);
+      --glass-strong: rgba(30, 40, 62, 0.68);
+      --glass-soft: rgba(15, 23, 42, 0.36);
+      --glass-edge: rgba(255, 255, 255, 0.18);
+      --glass-rim: rgba(167, 139, 250, 0.22);
+      --glass-top: rgba(255, 255, 255, 0.26);
+      --glass-sheen: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.03) 38%, rgba(255, 255, 255, 0) 64%);
+      --track-bg: rgba(255, 255, 255, 0.10);
+      --text: #f1f5f9;
+      --muted: #9eb0c9;
+      --shadow: 0 10px 28px rgba(0, 0, 0, 0.38), 0 1px 2px rgba(0, 0, 0, 0.24);
+    }
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
+    body {
+      margin: 0;
+      padding: 11px;
+      background-color: var(--bg-base);
+      background-image: var(--bg-mesh);
+      background-attachment: fixed;
+      color: var(--text);
+      font-family: "Segoe UI", "Microsoft YaHei UI", system-ui, -apple-system, sans-serif;
+      font-size: 12.5px;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+    }
+    .panel {
+      max-width: 440px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    /* 液态玻璃通用材质 */
+    .header, .tab-chip, .quota-mini, .card {
+      position: relative;
+      overflow: hidden;
+      background: var(--glass);
+      backdrop-filter: blur(20px) saturate(185%);
+      -webkit-backdrop-filter: blur(20px) saturate(185%);
+      border: 1px solid var(--glass-edge);
+      box-shadow: var(--shadow), inset 0 1px 0 var(--glass-top), inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+    }
+    .header::before, .card::before, .quota-mini::before, .tab-chip::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--glass-sheen);
+      pointer-events: none;
+    }
+    .header > *, .card > *, .quota-mini > *, .tab-chip > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 顶栏：大号猫猫动态头像 + 响应式两段式控制区 */
+    .header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 9px 10px;
+      border-radius: 17px;
+      padding: 10px 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+      flex: 1 1 175px;
+    }
+    .cat-avatar {
+      width: 54px;
+      height: 54px;
+      border-radius: 15px;
+      flex-shrink: 0;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      border: 1.5px solid rgba(255, 255, 255, 0.78);
+      box-shadow: 0 0 0 1.5px rgba(167, 139, 250, 0.48), 0 5px 14px rgba(96, 165, 250, 0.28);
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease;
+    }
+    .cat-avatar:hover {
+      transform: scale(1.07);
+      box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.78), 0 7px 18px rgba(96, 165, 250, 0.44);
+    }
+    .cat-avatar:active { transform: scale(0.94); }
+    .cat-avatar.overheat {
+      box-shadow: 0 0 0 2.5px rgba(244, 63, 94, 0.75), 0 0 20px rgba(251, 146, 60, 0.65);
+      animation: cat-wiggle 0.35s ease-in-out 2;
+    }
+    @keyframes cat-wiggle {
+      0%, 100% { transform: rotate(0deg) scale(1.04); }
+      25% { transform: rotate(-6deg) scale(1.06); }
+      75% { transform: rotate(6deg) scale(1.06); }
+    }
+    /* 三表情独立方形头像 */
+    .cat-avatar.mood-happy   { background-image: url('/avatars/happy.png'); }
+    .cat-avatar.mood-curious { background-image: url('/avatars/curious.png'); }
+    .cat-avatar.mood-sleepy  { background-image: url('/avatars/sleepy.png'); }
+    .title-wrap { min-width: 0; flex: 1; }
+    .title-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 750;
+      font-size: 13.5px;
+      white-space: nowrap;
+    }
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 99px;
+      background: #94a3b8;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .dot.live { background: #34d399; box-shadow: 0 0 8px #34d399; }
+    .dot.stale { background: #f59e0b; box-shadow: 0 0 6px #f59e0b; }
+    .dot.offline { background: #f43f5e; box-shadow: 0 0 6px #f43f5e; }
+    .cat-speech {
+      font-size: 11.5px;
+      color: var(--muted);
+      margin-top: 3px;
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1 0 auto;
+      justify-content: flex-end;
+    }
+    select, .icon-btn, .style-btn {
+      background: var(--glass-soft);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: var(--text);
+      border: 1px solid var(--glass-edge);
+      box-shadow: inset 0 1px 0 var(--glass-top);
+      border-radius: 10px;
+      font-size: 11.5px;
+      height: 28px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: transform 0.14s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+    select { padding: 0 8px; flex: 1 1 110px; min-width: 96px; max-width: 165px; }
+    .icon-btn {
+      width: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .icon-btn:hover, select:hover, .style-btn:hover {
+      background: var(--glass-strong);
+      border-color: rgba(167, 139, 250, 0.55);
+    }
+    .icon-btn:active { transform: scale(0.93); }
+    .model-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2px 6px;
+      font-size: 11.5px;
+      color: var(--muted);
+    }
+    .model-bar strong { color: var(--text); font-weight: 650; }
+
+    /* 三枚液态胶囊 Tab 芯片 */
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .tab-chip {
+      text-align: left;
+      border-radius: 14px;
+      padding: 9px 10px;
+      cursor: pointer;
+      color: var(--text);
+      transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .tab-chip:hover {
+      transform: translateY(-1px);
+      background: var(--glass-strong);
+      border-color: rgba(167, 139, 250, 0.55);
+    }
+    .tab-chip:active { transform: scale(0.98); }
+    .tab-chip[aria-selected="true"] {
+      background: linear-gradient(145deg, rgba(96, 165, 250, 0.22), rgba(167, 139, 250, 0.24));
+      border-color: rgba(167, 139, 250, 0.72);
+      box-shadow: 0 6px 18px rgba(139, 92, 246, 0.18), inset 0 1px 0 var(--glass-top), inset 0 0 12px rgba(255, 255, 255, 0.18);
+    }
+    .chip-title { font-size: 11px; color: var(--muted); }
+    .chip-val { font-size: 15.5px; font-weight: 750; letter-spacing: -0.2px; }
+    .chip-val small { font-size: 10.5px; font-weight: 500; color: var(--muted); margin-left: 2px; }
+    .chip-sub { font-size: 10.5px; color: var(--muted); }
+
+    /* 常驻双额度玻璃卡 */
+    .quota-mini-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .quota-mini {
+      border-radius: 14px;
+      padding: 9px 11px;
+    }
+    .qm-head, .qm-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+    }
+    .qm-head strong { font-size: 13.5px; }
+    .qm-foot { color: var(--muted); margin-top: 5px; font-size: 10.5px; }
+    .track {
+      position: relative;
+      height: 7px;
+      background: var(--track-bg);
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12);
+      border-radius: 99px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+    .fill {
+      height: 100%;
+      border-radius: 99px;
+      background: var(--rainbow);
+      box-shadow: 0 0 10px rgba(167, 139, 250, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+      transition: width 0.35s ease;
+    }
+    .fill.warn { background: linear-gradient(90deg, #fb923c, #f59e0b); box-shadow: 0 0 10px rgba(245, 158, 11, 0.38); }
+    .fill.danger { background: linear-gradient(90deg, #f43f5e, #fb7185); box-shadow: 0 0 10px rgba(244, 63, 94, 0.42); }
+    .forecast-tail {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(-45deg, rgba(245,158,11,0.5), rgba(245,158,11,0.5) 3px, transparent 3px, transparent 6px);
+      pointer-events: none;
+    }
+
+    /* 液态玻璃详情卡 */
+    .card {
+      border-radius: 16px;
+      padding: 13px;
+    }
+    .card[hidden] { display: none; }
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px 10px;
+      margin-bottom: 11px;
+    }
+    .hero-label { font-size: 11.5px; color: var(--muted); }
+    .hero-num { font-size: 23px; font-weight: 800; letter-spacing: -0.5px; white-space: nowrap; }
+    .hero-num small { font-size: 12px; font-weight: 500; color: var(--muted); margin-left: 3px; }
+    .pill {
+      display: inline-block;
+      margin-left: 6px;
+      padding: 2px 8px;
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(52, 211, 153, 0.18);
+      border: 1px solid rgba(52, 211, 153, 0.38);
+      color: #10b981;
+      vertical-align: middle;
+    }
+    .trail-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 7px;
+      flex: 1 1 160px;
+      min-width: 0;
+    }
+    .spark { flex: 1; min-width: 84px; max-width: 148px; height: 44px; overflow: visible; filter: drop-shadow(0 2px 6px rgba(167, 139, 250, 0.22)); }
+    .style-btn {
+      height: 25px;
+      padding: 0 9px;
+      font-size: 11px;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .style-btn.active { color: var(--text); border-color: rgba(167, 139, 250, 0.65); }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 7px;
+      margin: 0;
+    }
+    .stat-box {
+      background: var(--glass-soft);
+      border: 1px solid var(--glass-rim);
+      box-shadow: inset 0 1px 0 var(--glass-top);
+      border-radius: 11px;
+      padding: 8px 8px;
+      min-width: 0;
+    }
+    .stat-box dt { font-size: 10.5px; color: var(--muted); margin-bottom: 2px; white-space: nowrap; }
+    .stat-box dd { margin: 0; font-size: 12.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 4px 8px;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .meter {
+      display: flex;
+      height: 9px;
+      border-radius: 99px;
+      overflow: hidden;
+      background: var(--track-bg);
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12);
+      margin-bottom: 11px;
+    }
+    .seg-read { background: linear-gradient(90deg, #34d399, #10b981); }
+    .seg-miss { background: linear-gradient(90deg, #60a5fa, #3b82f6); }
+    .seg-out  { background: linear-gradient(90deg, #c084fc, #a78bfa); }
+
+    .quota-block {
+      background: var(--glass-soft);
+      border: 1px solid var(--glass-rim);
+      box-shadow: inset 0 1px 0 var(--glass-top);
+      border-radius: 12px;
+      padding: 9px 11px;
+      margin-top: 9px;
+    }
+    .qb-head { display: flex; justify-content: space-between; align-items: center; gap: 6px; font-size: 12px; }
+    .qb-sub { font-size: 11px; color: var(--muted); margin-top: 5px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px; }
+    .alert-text { color: var(--warning); font-weight: 600; }
+    .danger-text { color: var(--danger); font-weight: 600; }
+    .foot-status {
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+      padding: 2px 4px;
+      opacity: 0.85;
+    }
+    /* 星芒飘散粒子 */
+    .star-particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      font-size: 13px;
+      font-weight: 700;
+      will-change: transform, opacity;
+      animation: star-float 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    @keyframes star-float {
+      0%   { opacity: 0; transform: translate(0, 0) scale(0.4) rotate(0deg); }
+      20%  { opacity: 1; transform: translate(calc(var(--dx) * 0.25), calc(var(--dy) * 0.25)) scale(1.1) rotate(35deg); }
+      100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.55) rotate(130deg); }
+    }
+    /* 窄屏动态排版适配 */
+    @media (max-width: 340px) {
+      body { padding: 8px; }
+      .panel { gap: 8px; }
+      .header { padding: 9px 10px; }
+      .controls { width: 100%; justify-content: space-between; }
+      select { max-width: none; }
+      .tabs { gap: 6px; }
+      .tab-chip { padding: 7px 8px; border-radius: 12px; }
+      .chip-val { font-size: 14px; }
+      .chip-sub { font-size: 10px; }
+      .quota-mini-grid { gap: 6px; }
+      .quota-mini { padding: 8px 9px; }
+      .card { padding: 11px; }
+      .hero-num { font-size: 21px; }
+      .stats-grid { gap: 5px; }
+      .stat-box { padding: 7px 6px; }
+      .stat-box dd { font-size: 12px; }
+    }
+    @media (max-width: 268px) {
+      .quota-mini-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .stat-box:last-child { grid-column: span 2; }
+    }
+  </style>
+</head>
+<body>
+  <main class="panel">
+    <header class="header">
+      <div class="brand">
+        <div id="cat-avatar" class="cat-avatar mood-curious" title="点一下戳戳星海猫猫 ✦"></div>
+        <div class="title-wrap">
+          <div class="title-row">
+            <span>星轨猫猫仪表盘</span>
+            <span id="conn-dot" class="dot"></span>
+          </div>
+          <div id="cat-speech" class="cat-speech">正在连接本地星轨服务…</div>
+        </div>
+      </div>
+      <div class="controls">
+        <select id="group-select" title="切换额度组"></select>
+        <button id="theme-btn" class="icon-btn" type="button" title="切换深/浅主题">◐</button>
+        <button id="refresh-btn" class="icon-btn" type="button" title="立即刷新">↻</button>
+      </div>
+    </header>
+
+    <div class="model-bar">
+      <span>当前采样模型</span>
+      <strong id="model-name">—</strong>
+    </div>
+
+    <nav class="tabs" role="tablist">
+      <button class="tab-chip" type="button" role="tab" data-tab="speed" aria-selected="true">
+        <span class="chip-title">生成速度</span>
+        <span class="chip-val"><span id="chip-tps">—</span><small>tok/s</small></span>
+        <span class="chip-sub" id="chip-steps">— 步</span>
+      </button>
+      <button class="tab-chip" type="button" role="tab" data-tab="cache" aria-selected="false">
+        <span class="chip-title">缓存命中</span>
+        <span class="chip-val" id="chip-hit">—</span>
+        <span class="chip-sub" id="chip-tok">— tok</span>
+      </button>
+      <button class="tab-chip" type="button" role="tab" data-tab="context" aria-selected="false">
+        <span class="chip-title">上下文</span>
+        <span class="chip-val" id="chip-ctx">—</span>
+        <span class="chip-sub" id="chip-ctx-size">—</span>
+      </button>
+    </nav>
+
+    <section class="quota-mini-grid">
+      <div class="quota-mini">
+        <div class="qm-head"><span>5 小时额度</span><strong id="mini-5h-pct">—</strong></div>
+        <div class="track"><div id="mini-5h-fill" class="fill" style="width:0%"></div></div>
+        <div class="qm-foot"><span>重置倒计时</span><span id="mini-5h-cd">—</span></div>
+      </div>
+      <div class="quota-mini">
+        <div class="qm-head"><span>周额度</span><strong id="mini-wk-pct">—</strong></div>
+        <div class="track"><div id="mini-wk-fill" class="fill" style="width:0%"></div></div>
+        <div class="qm-foot"><span>重置倒计时</span><span id="mini-wk-cd">—</span></div>
+      </div>
+    </section>
+
+    <!-- Tab 1: 速度 -->
+    <article id="card-speed" class="card">
+      <div class="hero">
+        <div>
+          <div class="hero-label">最近生成速率</div>
+          <div class="hero-num"><span id="latest-tps">—</span><small>tok/s</small></div>
+        </div>
+        <div class="trail-box">
+          <svg id="spark-svg" class="spark" viewBox="0 0 126 46"></svg>
+          <button id="curve-toggle" class="style-btn active" type="button" title="切换星芒阶梯/平滑曲线">✦ 阶梯</button>
+        </div>
+      </div>
+      <dl class="stats-grid">
+        <div class="stat-box"><dt>会话均速</dt><dd id="avg-tps">—</dd></div>
+        <div class="stat-box"><dt>首字延迟</dt><dd id="ttft-val">—</dd></div>
+        <div class="stat-box"><dt>峰值速率</dt><dd id="peak-tps">—</dd></div>
+      </dl>
+      <div class="meta-row">
+        <span id="time-split">模型 — / 工具 —</span>
+        <span id="sample-cnt">0 次有效采样</span>
+      </div>
+    </article>
+
+    <!-- Tab 2: 缓存与 Token -->
+    <article id="card-cache" class="card" hidden>
+      <div class="hero">
+        <div>
+          <div class="hero-label">本会话累计 Token</div>
+          <div class="hero-num"><span id="total-tok">—</span><span id="hit-pill" class="pill">—</span></div>
+        </div>
+      </div>
+      <div class="meter">
+        <div id="seg-read" class="seg-read" style="width:0%"></div>
+        <div id="seg-miss" class="seg-miss" style="width:0%"></div>
+        <div id="seg-out" class="seg-out" style="width:0%"></div>
+      </div>
+      <dl class="stats-grid">
+        <div class="stat-box"><dt>缓存读取</dt><dd id="val-read">—</dd></div>
+        <div class="stat-box"><dt>未缓存输入</dt><dd id="val-miss">—</dd></div>
+        <div class="stat-box"><dt>输出 Token</dt><dd id="val-out">—</dd></div>
+      </dl>
+      <div class="meta-row">
+        <span id="val-write">缓存写入：0</span>
+        <span id="val-think">思考输出：0</span>
+      </div>
+    </article>
+
+    <!-- Tab 3: 上下文与额度预测 -->
+    <article id="card-context" class="card" hidden>
+      <div class="qb-head">
+        <span>上下文窗口占用</span>
+        <strong id="ctx-detail">—</strong>
+      </div>
+      <div class="track" style="height:8px;margin-top:6px"><div id="ctx-fill" class="fill" style="width:0%"></div></div>
+      <div class="quota-block">
+        <div class="qb-head"><span>5 小时共享额度</span><strong id="det-5h-pct">—</strong></div>
+        <div class="track">
+          <div id="det-5h-fill" class="fill" style="width:0%"></div>
+          <div id="det-5h-tail" class="forecast-tail" style="left:0%;width:0%"></div>
+        </div>
+        <div class="qb-sub"><span id="det-5h-forecast">节奏预测计算中…</span><span id="det-5h-cd">—</span></div>
+      </div>
+      <div class="quota-block">
+        <div class="qb-head"><span>每周共享额度</span><strong id="det-wk-pct">—</strong></div>
+        <div class="track">
+          <div id="det-wk-fill" class="fill" style="width:0%"></div>
+          <div id="det-wk-tail" class="forecast-tail" style="left:0%;width:0%"></div>
+        </div>
+        <div class="qb-sub"><span id="det-wk-forecast">节奏预测计算中…</span><span id="det-wk-cd">—</span></div>
+      </div>
+    </article>
+
+    <div id="foot-status" class="foot-status">纯本地 127.0.0.1 实时采集 · 零磁盘账本</div>
+  </main>
+
+  <script>
+    (() => {
+      const $ = (id) => document.getElementById(id);
+      let snap = null;
+      let selectedGroupId = null;
+      let serverOffset = 0;
+      let stepStyle = true;
+      let manualMoodIdx = -1;
+      let pokeCount = 0;
+      let lastPokeAt = 0;
+      const MOODS = ["mood-happy", "mood-curious", "mood-sleepy"];
+      const SPEECH_POKE = [
+        ["mood-happy", "呼噜…才、才没有被摸得很舒服呢 ✦"],
+        ["mood-curious", "别老戳耳朵啦，算力数据正跑着呢～"],
+        ["mood-happy", "投喂小鱼干的话，我可以帮你想快一点 ✦"],
+        ["mood-curious", "盯梢中…你写的代码我都看着呢"],
+        ["mood-sleepy", "再乱拉尾巴我就要哈气亮肉垫了哦…"],
+        ["mood-happy", "哼，看在你这么专心的份上陪你盯着吧 ✦"]
+      ];
+      let speechCursor = 0;
+
+      function spawnStars(el, count = 4) {
+        const rect = el.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const colors = ["#60a5fa", "#a78bfa", "#fb923c", "#34d399", "#fbbf24"];
+        for (let i = 0; i < count; i++) {
+          const sp = document.createElement("span");
+          sp.className = "star-particle";
+          sp.textContent = "✦";
+          sp.style.left = `${cx + (Math.random() - 0.5) * 20}px`;
+          sp.style.top = `${cy + (Math.random() - 0.5) * 20}px`;
+          sp.style.color = colors[i % colors.length];
+          const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.6;
+          const dist = 26 + Math.random() * 22;
+          sp.style.setProperty("--dx", `${Math.round(Math.cos(angle) * dist)}px`);
+          sp.style.setProperty("--dy", `${Math.round(Math.sin(angle) * dist - 12)}px`);
+          document.body.appendChild(sp);
+          setTimeout(() => sp.remove(), 900);
+        }
+      }
+
+      function fmtNum(n) {
+        if (typeof n !== "number" || !Number.isFinite(n)) return "—";
+        if (n >= 1e9) return (n / 1e9).toFixed(2) + "B";
+        if (n >= 1e6) return (n / 1e6).toFixed(2) + "M";
+        if (n >= 1e3) return (n / 1e3).toFixed(1) + "K";
+        return String(Math.round(n));
+      }
+      function fmtPct(f) {
+        if (typeof f !== "number" || !Number.isFinite(f)) return "—";
+        return Math.round(f * 100) + "%";
+      }
+      function fmtSec(s) {
+        if (typeof s !== "number" || !Number.isFinite(s)) return "—";
+        if (s < 60) return s.toFixed(1) + "s";
+        const m = Math.floor(s / 60);
+        return `${m}m${Math.round(s % 60)}s`;
+      }
+      function fmtCountdown(ms) {
+        if (typeof ms !== "number" || !Number.isFinite(ms)) return "—";
+        if (ms <= 0) return "已重置";
+        const s = Math.floor(ms / 1000);
+        const d = Math.floor(s / 86400);
+        const h = Math.floor((s % 86400) / 3600);
+        const m = Math.floor((s % 3600) / 60);
+        if (d > 0) return `${d}天 ${h}小时`;
+        if (h > 0) return `${h}小时 ${m}分`;
+        return `${m}分 ${s % 60}秒`;
+      }
+
+      // Tab 切换
+      document.querySelectorAll(".tab-chip").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const target = btn.dataset.tab;
+          document.querySelectorAll(".tab-chip").forEach((b) => b.setAttribute("aria-selected", String(b === btn)));
+          ["speed", "cache", "context"].forEach((k) => {
+            $(`card-${k}`).hidden = k !== target;
+          });
+        });
+      });
+
+      // 主题切换
+      $("theme-btn").addEventListener("click", () => {
+        const cur = document.documentElement.dataset.theme;
+        const darkNow = cur ? cur === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme = darkNow ? "light" : "dark";
+      });
+
+      // 曲线风格切换
+      $("curve-toggle").addEventListener("click", () => {
+        stepStyle = !stepStyle;
+        $("curve-toggle").textContent = stepStyle ? "✦ 阶梯" : "〜 平滑";
+        if (snap) renderSpark(snap.speed?.recentTps || []);
+      });
+
+      // 戳猫猫互动（带星芒飘散 + 5连戳过热彩蛋）
+      $("cat-avatar").addEventListener("click", () => {
+        const el = $("cat-avatar");
+        const now = Date.now();
+        pokeCount = (now - lastPokeAt < 2200) ? pokeCount + 1 : 1;
+        lastPokeAt = now;
+        manualMoodIdx = 1;
+
+        if (pokeCount >= 5) {
+          pokeCount = 0;
+          el.classList.remove("overheat");
+          void el.offsetWidth;
+          el.classList.add("overheat");
+          applyMood("mood-sleepy", "呜…算力过热要宕机了！不准再连戳啦 ✦");
+          spawnStars(el, 8);
+          setTimeout(() => el.classList.remove("overheat"), 900);
+        } else {
+          const [mood, line] = SPEECH_POKE[speechCursor % SPEECH_POKE.length];
+          speechCursor += 1;
+          applyMood(mood, line);
+          spawnStars(el, 4);
+        }
+        clearTimeout(window.__pokeTimer);
+        window.__pokeTimer = setTimeout(() => { manualMoodIdx = -1; if (snap) updateMoodAuto(); }, 5000);
+      });
+
+      $("group-select").addEventListener("change", (e) => {
+        selectedGroupId = e.target.value;
+        if (snap) renderQuotaOnly();
+      });
+
+      $("refresh-btn").addEventListener("click", () => poll(true));
+
+      function applyMood(moodClass, speech) {
+        const el = $("cat-avatar");
+        el.classList.remove("mood-happy", "mood-curious", "mood-sleepy");
+        el.classList.add(moodClass);
+        if (speech) $("cat-speech").textContent = speech;
+      }
+
+      function activeGroup() {
+        const groups = snap?.groups || [];
+        if (!groups.length) return null;
+        if (selectedGroupId) {
+          const hit = groups.find((g) => g.id === selectedGroupId);
+          if (hit) return hit;
+        }
+        const m = String(snap?.speed?.model || "").toLowerCase();
+        if (m.includes("claude") || m.includes("gpt")) {
+          const g = groups.find((x) => /claude|gpt|argon|other/i.test(x.id + x.name));
+          if (g) return g;
+        }
+        return groups[0];
+      }
+
+      function updateMoodAuto() {
+        if (manualMoodIdx >= 0 || !snap) return;
+        if (snap.connection !== "live") {
+          applyMood("mood-sleepy", "连接休眠中，等待星轨唤醒…");
+          return;
+        }
+        const grp = activeGroup();
+        const r5 = grp?.windows?.["5h"]?.remaining;
+        const rw = grp?.windows?.["weekly"]?.remaining;
+        const warn5 = grp?.windows?.["5h"]?.forecast?.willExhaust;
+        const warnW = grp?.windows?.["weekly"]?.forecast?.willExhaust;
+        if ((typeof r5 === "number" && r5 < 0.2) || (typeof rw === "number" && rw < 0.2) || warn5 || warnW) {
+          applyMood("mood-sleepy", "额度偏紧啦，省着点算力哦…");
+          return;
+        }
+        const tps = snap.speed?.latestTps;
+        if (typeof tps === "number" && tps >= 45) {
+          applyMood("mood-happy", `火力全开 ${tps} tok/s ✦`);
+        } else if (typeof tps === "number") {
+          applyMood("mood-curious", `稳定输出 ${tps} tok/s 中…`);
+        } else {
+          applyMood("mood-curious", "已连上星轨，等待新对话采样");
+        }
+      }
+
+      function renderSpark(samples) {
+        const svg = $("spark-svg");
+        const W = 126, H = 46, padTop = 8, padBot = 5;
+        if (!samples.length) {
+          svg.innerHTML = `<line x1="0" y1="${H-2}" x2="${W}" y2="${H-2}" stroke="rgba(148,163,184,0.25)" stroke-width="1"/>`;
+          return;
+        }
+        const plotValues = (!stepStyle && samples.length >= 3)
+          ? samples.map((v, i) => (i === 0 || i === samples.length - 1) ? v : (samples[i - 1] * 0.22 + v * 0.56 + samples[i + 1] * 0.22))
+          : samples;
+        const max = Math.max(...plotValues) * 1.08;
+        const min = Math.min(...plotValues) * 0.85;
+        const span = max - min || 1;
+        const pts = plotValues.map((v, i) => {
+          const x = plotValues.length === 1 ? W - 8 : 4 + (i * (W - 14)) / (plotValues.length - 1);
+          const y = padTop + (H - padTop - padBot) * (1 - (v - min) / span);
+          return [Math.round(x * 10) / 10, Math.round(y * 10) / 10];
+        });
+        let d = `M${pts[0][0]} ${pts[0][1]}`;
+        if (stepStyle) {
+          for (let i = 1; i < pts.length; i++) {
+            d += ` H${pts[i][0]} V${pts[i][1]}`;
+          }
+        } else if (pts.length === 2) {
+          d += ` L${pts[1][0]} ${pts[1][1]}`;
+        } else if (pts.length > 2) {
+          // 单调三次贝塞尔平滑插值（避免过冲同时保持圆润流动感）
+          const slopes = [];
+          for (let i = 0; i < pts.length - 1; i++) {
+            const dx = pts[i + 1][0] - pts[i][0] || 1;
+            slopes.push((pts[i + 1][1] - pts[i][1]) / dx);
+          }
+          const tangents = [slopes[0]];
+          for (let i = 1; i < pts.length - 1; i++) {
+            tangents.push(slopes[i - 1] * slopes[i] <= 0 ? 0 : (slopes[i - 1] + slopes[i]) / 2);
+          }
+          tangents.push(slopes[slopes.length - 1]);
+          for (let i = 0; i < pts.length - 1; i++) {
+            const [x0, y0] = pts[i], [x1, y1] = pts[i + 1];
+            const dx = (x1 - x0) / 3;
+            const c1x = +(x0 + dx).toFixed(1), c1y = +Math.max(padTop - 2, Math.min(H - 2, y0 + tangents[i] * dx)).toFixed(1);
+            const c2x = +(x1 - dx).toFixed(1), c2y = +Math.max(padTop - 2, Math.min(H - 2, y1 - tangents[i + 1] * dx)).toFixed(1);
+            d += ` C${c1x} ${c1y} ${c2x} ${c2y} ${x1} ${y1}`;
+          }
+        }
+        const last = pts[pts.length - 1];
+        const area = `${d} L${last[0]} ${H} L${pts[0][0]} ${H} Z`;
+        svg.innerHTML = `
+          <defs>
+            <linearGradient id="spLine" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#60a5fa"/>
+              <stop offset="45%" stop-color="#a78bfa"/>
+              <stop offset="78%" stop-color="#fb923c"/>
+              <stop offset="100%" stop-color="#34d399"/>
+            </linearGradient>
+            <linearGradient id="spFill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.32"/>
+              <stop offset="100%" stop-color="#60a5fa" stop-opacity="0.02"/>
+            </linearGradient>
+          </defs>
+          <path d="${area}" fill="url(#spFill)"/>
+          <path d="${d}" fill="none" stroke="url(#spLine)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M${last[0]} ${last[1]-5.5} L${last[0]+1.8} ${last[1]-1.8} L${last[0]+5.5} ${last[1]} L${last[0]+1.8} ${last[1]+1.8} L${last[0]} ${last[1]+5.5} L${last[0]-1.8} ${last[1]+1.8} L${last[0]-5.5} ${last[1]} L${last[0]-1.8} ${last[1]-1.8} Z" fill="#fbbf24"/>
+        `;
+      }
+
+      function paintBar(fillEl, rem, willExhaust) {
+        fillEl.style.width = typeof rem === "number" ? `${Math.max(0, Math.min(100, rem * 100))}%` : "0%";
+        fillEl.classList.remove("warn", "danger");
+        if (typeof rem === "number" && rem < 0.08) fillEl.classList.add("danger");
+        else if ((typeof rem === "number" && rem < 0.2) || willExhaust) fillEl.classList.add("warn");
+      }
+
+      function renderWindow(winObj, miniPrefix, detPrefix, now) {
+        const rem = winObj?.available && !winObj?.disabled ? winObj.remaining : null;
+        const fc = winObj?.forecast;
+        $(`${miniPrefix}-pct`).textContent = winObj?.disabled ? "已停用" : fmtPct(rem);
+        $(`${detPrefix}-pct`).textContent = winObj?.disabled ? "已停用" : fmtPct(rem);
+        paintBar($(`${miniPrefix}-fill`), rem, fc?.willExhaust);
+        paintBar($(`${detPrefix}-fill`), rem, fc?.willExhaust);
+
+        const leftMs = typeof winObj?.resetMs === "number" ? winObj.resetMs - now : null;
+        const cdText = leftMs !== null ? fmtCountdown(leftMs) : "—";
+        $(`${miniPrefix}-cd`).textContent = cdText;
+        $(`${detPrefix}-cd`).textContent = leftMs !== null ? `重置：${cdText}` : "—";
+
+        const tail = $(`${detPrefix}-tail`);
+        const fcEl = $(`${detPrefix}-forecast`);
+        fcEl.className = "";
+        if (!winObj?.available) {
+          fcEl.textContent = "账户未返回此窗口";
+          tail.style.width = "0%";
+        } else if (fc && !fc.warmingUp && typeof rem === "number") {
+          const proj = fc.projectedRemaining ?? rem;
+          if (proj < rem - 0.005) {
+            tail.style.left = `${proj * 100}%`;
+            tail.style.width = `${(rem - proj) * 100}%`;
+          } else {
+            tail.style.width = "0%";
+          }
+          if (fc.willExhaust) {
+            fcEl.className = "alert-text";
+            fcEl.textContent = `预计 ${fmtCountdown(fc.exhaustInMs)} 后耗尽`;
+          } else {
+            fcEl.textContent = `按当前节奏重置前余约 ${fmtPct(proj)}`;
+          }
+        } else {
+          tail.style.width = "0%";
+          fcEl.textContent = "用量较轻，节奏平稳";
+        }
+      }
+
+      function renderQuotaOnly() {
+        const grp = activeGroup();
+        const now = Date.now() + serverOffset;
+        renderWindow(grp?.windows?.["5h"], "mini-5h", "det-5h", now);
+        renderWindow(grp?.windows?.["weekly"], "mini-wk", "det-wk", now);
+        updateMoodAuto();
+      }
+
+      function renderAll() {
+        if (!snap) return;
+        const dot = $("conn-dot");
+        dot.className = "dot " + (snap.connection || "offline");
+
+        const groups = snap.groups || [];
+        const sel = $("group-select");
+        const cnGroupName = (name) => {
+          if (/^Gemini Models$/i.test(name)) return "Gemini 模型";
+          if (/^Claude and GPT models$/i.test(name)) return "Claude / GPT 模型";
+          return name;
+        };
+        const optKey = groups.map((g) => `${g.id}:${g.name}`).join("|");
+        if (sel.dataset.key !== optKey) {
+          sel.innerHTML = "";
+          if (!groups.length) sel.add(new Option("暂无额度组", ""));
+          else groups.forEach((g) => sel.add(new Option(cnGroupName(g.name), g.id)));
+          sel.dataset.key = optKey;
+        }
+        const grp = activeGroup();
+        if (grp) sel.value = grp.id;
+
+        const sp = snap.speed;
+        $("model-name").textContent = sp?.model || "等待采样";
+        $("chip-tps").textContent = sp?.latestTps ?? sp?.tps ?? "—";
+        $("chip-steps").textContent = sp ? `${sp.steps} 步` : "— 步";
+
+        const cache = sp?.cache;
+        $("chip-hit").textContent = fmtPct(cache?.hitRate);
+        $("chip-tok").textContent = cache ? `${fmtNum(cache.totalTokens)} tok` : "— tok";
+
+        const ctx = sp?.context;
+        $("chip-ctx").textContent = fmtPct(ctx?.usedFraction);
+        $("chip-ctx-size").textContent = ctx ? `${fmtNum(ctx.usedTokens)}/${fmtNum(ctx.maxTokens)}` : "—";
+
+        // 速度卡
+        $("latest-tps").textContent = sp?.latestTps ?? "—";
+        $("avg-tps").textContent = sp?.tps != null ? `${sp.tps} tok/s` : "—";
+        $("ttft-val").textContent = fmtSec(sp?.ttftSeconds);
+        $("peak-tps").textContent = sp?.peakTps != null ? `${sp.peakTps} tok/s` : "—";
+        $("time-split").textContent = sp ? `模型 ${fmtSec(sp.modelSeconds)} / 工具 ${fmtSec(sp.toolSeconds)}` : "模型 — / 工具 —";
+        $("sample-cnt").textContent = sp ? `${sp.measuredRequests} / ${sp.requests} 次有效采样` : "0 次采样";
+        renderSpark(sp?.recentTps || []);
+
+        // 缓存卡
+        $("total-tok").textContent = cache ? fmtNum(cache.totalTokens) : "—";
+        $("hit-pill").textContent = cache?.hitRate != null ? `命中 ${fmtPct(cache.hitRate)}` : "暂无命中率";
+        $("val-read").textContent = cache ? fmtNum(cache.cachedTokens) : "—";
+        $("val-miss").textContent = cache ? fmtNum(cache.uncachedTokens) : "—";
+        $("val-out").textContent = cache ? fmtNum(cache.outputTokens) : "—";
+        $("val-write").textContent = `缓存写入：${cache ? fmtNum(cache.cacheWriteTokens) : 0}`;
+        $("val-think").textContent = `思考输出：${cache ? fmtNum(cache.thinkingOutputTokens) : 0}`;
+        const tot = cache?.totalTokens || 0;
+        $("seg-read").style.width = tot ? `${(cache.cachedTokens / tot) * 100}%` : "0%";
+        $("seg-miss").style.width = tot ? `${(cache.uncachedTokens / tot) * 100}%` : "0%";
+        $("seg-out").style.width = tot ? `${(cache.outputTokens / tot) * 100}%` : "0%";
+
+        // 上下文卡
+        $("ctx-detail").textContent = ctx ? `${fmtPct(ctx.usedFraction)} (${fmtNum(ctx.usedTokens)} / ${fmtNum(ctx.maxTokens)})` : "暂无数据";
+        paintBar($("ctx-fill"), ctx?.usedFraction != null ? 1 - ctx.usedFraction : 0, false);
+        $("ctx-fill").style.width = ctx?.usedFraction != null ? `${Math.min(100, ctx.usedFraction * 100)}%` : "0%";
+
+        renderQuotaOnly();
+        $("foot-status").textContent = snap.error || "纯本地 127.0.0.1 实时采集 · 零磁盘账本";
+      }
+
+      async function poll(force = false) {
+        try {
+          const transport = window.sidecar?.fetch ? window.sidecar.fetch.bind(window.sidecar) : fetch;
+          const res = await transport(`/api/metrics${force ? "?force=1" : ""}`, { cache: "no-store" });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          snap = await res.json();
+          if (typeof snap.serverTimeMs === "number") serverOffset = snap.serverTimeMs - Date.now();
+          renderAll();
+        } catch (err) {
+          $("conn-dot").className = "dot offline";
+          $("foot-status").textContent = `连接异常：${err.message || err}`;
+        }
+      }
+
+      // 接收 Antigravity 宿主主题变更
+      window.addEventListener("message", (ev) => {
+        const theme = ev?.data?.theme || ev?.data?.colorTheme;
+        if (theme === "dark" || theme === "light") document.documentElement.dataset.theme = theme;
+      });
+
+      poll(false);
+      setInterval(() => poll(false), 3000);
+      setInterval(() => { if (snap) renderQuotaOnly(); }, 1000);
+    })();
+  </script>
+</body>
+</html>

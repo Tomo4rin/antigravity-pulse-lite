@@ -1,0 +1,7 @@
+{
+  "name": "antigravity-pulse-lite",
+  "display_name": "星轨猫猫仪表盘",
+  "description": "轻量纯中文 Windows 侧栏仪表盘：实时查看生成速度、缓存命中、上下文窗口、5h/周共享额度与消耗预测，内置星海猫猫动态表情与彩虹曲线。",
+  "version": "0.1.0",
+  "logo": "assets/logo.svg"
+}
