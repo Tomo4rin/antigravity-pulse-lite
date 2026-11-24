@@ -44,10 +44,11 @@ class PanelHandler(BaseHTTPRequestHandler):
             self._send_bytes(200, "text/html; charset=utf-8", body)
             return
 
-        if path in ("/avatars/happy.png", "/avatars/curious.png", "/avatars/sleepy.png"):
+        if path in ("/avatars/happy.png", "/avatars/curious.png", "/avatars/sleepy.png", "/avatars/smug.jpg"):
             target = AVATARS_DIR / Path(path).name
             if target.is_file():
-                self._send_bytes(200, "image/png", target.read_bytes())
+                ctype = "image/jpeg" if target.suffix.lower() in (".jpg", ".jpeg") else "image/png"
+                self._send_bytes(200, ctype, target.read_bytes())
                 return
 
         if path == "/preload.js":

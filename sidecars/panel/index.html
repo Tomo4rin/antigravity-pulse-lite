@@ -163,10 +163,11 @@
       25% { transform: rotate(-6deg) scale(1.06); }
       75% { transform: rotate(6deg) scale(1.06); }
     }
-    /* 三表情独立方形头像 */
+    /* 四表情独立高清头像 */
     .cat-avatar.mood-happy   { background-image: url('/avatars/happy.png'); }
     .cat-avatar.mood-curious { background-image: url('/avatars/curious.png'); }
     .cat-avatar.mood-sleepy  { background-image: url('/avatars/sleepy.png'); }
+    .cat-avatar.mood-smug    { background-image: url('/avatars/smug.jpg'); }
     .title-wrap { min-width: 0; flex: 1; }
     .title-row {
       display: flex;
@@ -592,7 +593,7 @@
       </div>
     </article>
 
-    <div id="foot-status" class="foot-status">纯本地 127.0.0.1 实时采集 · 零磁盘账本</div>
+    <div id="foot-status" class="foot-status" hidden></div>
   </main>
 
   <script>
@@ -605,11 +606,12 @@
       let manualMoodIdx = -1;
       let pokeCount = 0;
       let lastPokeAt = 0;
-      const MOODS = ["mood-happy", "mood-curious", "mood-sleepy"];
+      const MOODS = ["mood-happy", "mood-smug", "mood-curious", "mood-sleepy"];
       const SPEECH_POKE = [
+        ["mood-smug", "哼哼，本猫亲自盯着算力，稳得很 ✦"],
         ["mood-happy", "呼噜…才、才没有被摸得很舒服呢 ✦"],
         ["mood-curious", "别老戳耳朵啦，算力数据正跑着呢～"],
-        ["mood-happy", "投喂小鱼干的话，我可以帮你想快一点 ✦"],
+        ["mood-smug", "投喂小鱼干的话，我可以帮你想快一点 ✦"],
         ["mood-curious", "盯梢中…你写的代码我都看着呢"],
         ["mood-sleepy", "再乱拉尾巴我就要哈气亮肉垫了哦…"],
         ["mood-happy", "哼，看在你这么专心的份上陪你盯着吧 ✦"]
@@ -726,7 +728,7 @@
 
       function applyMood(moodClass, speech) {
         const el = $("cat-avatar");
-        el.classList.remove("mood-happy", "mood-curious", "mood-sleepy");
+        el.classList.remove("mood-happy", "mood-smug", "mood-curious", "mood-sleepy");
         el.classList.add(moodClass);
         if (speech) $("cat-speech").textContent = speech;
       }
@@ -762,8 +764,10 @@
           return;
         }
         const tps = snap.speed?.latestTps;
-        if (typeof tps === "number" && tps >= 45) {
-          applyMood("mood-happy", `火力全开 ${tps} tok/s ✦`);
+        if (typeof tps === "number" && tps >= 80) {
+          applyMood("mood-smug", `火力全开 ${tps} tok/s ✦`);
+        } else if (typeof tps === "number" && tps >= 40) {
+          applyMood("mood-happy", `顺滑输出 ${tps} tok/s ✦`);
         } else if (typeof tps === "number") {
           applyMood("mood-curious", `稳定输出 ${tps} tok/s 中…`);
         } else {
@@ -954,7 +958,14 @@
         $("ctx-fill").style.width = ctx?.usedFraction != null ? `${Math.min(100, ctx.usedFraction * 100)}%` : "0%";
 
         renderQuotaOnly();
-        $("foot-status").textContent = snap.error || "纯本地 127.0.0.1 实时采集 · 零磁盘账本";
+        const foot = $("foot-status");
+        if (snap.error) {
+          foot.textContent = snap.error;
+          foot.hidden = false;
+        } else {
+          foot.textContent = "";
+          foot.hidden = true;
+        }
       }
 
       async function poll(force = false) {
@@ -967,7 +978,9 @@
           renderAll();
         } catch (err) {
           $("conn-dot").className = "dot offline";
-          $("foot-status").textContent = `连接异常：${err.message || err}`;
+          const foot = $("foot-status");
+          foot.textContent = `连接异常：${err.message || err}`;
+          foot.hidden = false;
         }
       }
 
